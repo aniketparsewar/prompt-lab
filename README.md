@@ -44,7 +44,7 @@ right numbers).
 
 ## Exercises completed
 
-- [ ] Added a v3 prompt version and beat v2's score
+- [x] Added a v3 prompt version and beat v2's score
 - [ ] Added a regex judge for dates/amounts
-- [ ] Tightened the judge against rambling-but-correct answers
-- [ ] Added a consistency judge (same question twice at temp 0.7)
+- [x] Tightened the judge against rambling-but-correct answers
+- [x] Added a consistency judge (same question twice at temp 0.7)

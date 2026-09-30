@@ -9,14 +9,14 @@ def load_prompts(prompts_dir: str) -> dict[str, str]:
     """Each prompts/*.txt file is one version: filename (sans ext) -> prompt text."""
     versions = {}
     for path in sorted(Path(prompts_dir).glob("*.txt")):
-        versions[path.stem] = path.read_text().strip()
+        versions[path.stem] = path.read_text(encoding="utf-8").strip()
     if not versions:
         raise RuntimeError(f"No prompt versions found in {prompts_dir}")
     return versions
 
 
 def load_tests(tests_path: str) -> list[dict]:
-    with open(tests_path) as f:
+    with open(tests_path, encoding="utf-8") as f:
         tests = json.load(f)
     if not tests:
         raise RuntimeError(f"No tests found in {tests_path}")
@@ -33,18 +33,25 @@ def run_one(system_prompt: str, test: dict, context: str,
     resp = llm.ask(system_prompt, user_prompt, temperature=temperature)
 
     kw = judges.keyword_check(test, resp["answer"])
+    cite = judges.citation_check(test, resp["answer"], context)
+
     judge_result = None
     judge_cost = 0.0
     if use_judge and test.get("rubric"):
         judge_result = judges.llm_judge(test, resp["answer"])
         judge_cost = judge_result.get("cost_usd", 0.0)
 
-    passed = kw["passed"] and (judge_result is None or judge_result["passed"])
+    passed = (
+        kw["passed"]
+        and cite["passed"]
+        and (judge_result is None or judge_result["passed"])
+    )
     return {
         "test_id": test["id"],
         "question": test["question"],
         "answer": resp["answer"],
         "keyword": kw,
+        "citation": cite,
         "judge": judge_result,
         "passed": passed,
         "cost_usd": resp["cost_usd"] + judge_cost,

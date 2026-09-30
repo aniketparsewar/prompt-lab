@@ -37,6 +37,21 @@ def llm_judge(test: dict, answer: str) -> dict:
         "cost_usd": result["cost_usd"],
     }
 
+def _canon(s: str) -> str:
+    return re.sub(r"\s+", " ", s).strip()
+
+def citation_check(test: dict, answer: str, context: str) -> dict:
+    """Every 'statement says: "<quote>"' must appear in the context (whitespace-insensitive)."""
+    quotes = re.findall(r'statement says:\s*"([^"]+)"', answer, flags=re.IGNORECASE)
+    norm_context = _canon(context)
+    forged = [q for q in quotes if _canon(q) not in norm_context]
+    return {
+        "passed": not forged,
+        "details": f"forged quotes: {forged}" if forged else f"{len(quotes)} quotes verified",
+    }
+
+
+
 
 # ---- EXERCISES ----
 # 1. Add a "regex_check" judge: test cases get "must_match" regex patterns.

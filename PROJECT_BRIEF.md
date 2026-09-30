@@ -18,29 +18,29 @@ every serious AI team runs evals; almost no junior portfolio shows one.
 ## Weekend task list
 
 ### Day 1 — Make it run
-- [ ] Setup: venv, requirements, `.env` (same key as project 1)
-- [ ] Create `statement.txt`: from project 1's folder run
+- [x] Setup: venv, requirements, `.env` (same key as project 1)
+- [x] Create `statement.txt`: from project 1's folder run
       `python -c "from src.pdf_reader import extract_text; t,_ = extract_text('statement.pdf'); open('/path/to/prompt-lab/statement.txt','w').write(t)"`
       (adapt the numbers in `tests/statement_tests.json` to YOUR statement if they differ)
-- [ ] `python eval.py --context statement.txt --no-judge` — keyword checks only
-- [ ] Read `src/judges.py` until you can explain why two judges exist
-- [ ] `python eval.py --context statement.txt` — full run with the LLM judge
-- [ ] Study the failures table: which tests does v1 fail that v2 passes?
+- [x] `python eval.py --context statement.txt --no-judge` — keyword checks only
+- [x] Read `src/judges.py` until you can explain why two judges exist
+- [x] `python eval.py --context statement.txt` — full run with the LLM judge
+- [x] Study the failures table: which tests does v1 fail that v2 passes?
 
 ### Day 2 — Make it yours
-- [ ] Write prompt `v3`: try to beat v2. Ideas: few-shot example in the system
+- [x] Write prompt `v3`: try to beat v2. Ideas: few-shot example in the system
       prompt, or an explicit "first quote the relevant lines, then answer" step.
-- [ ] Re-run the harness. Did v3 win? If not, read the failures and iterate —
+- [x] Re-run the harness. Did v3 win? If not, read the failures and iterate —
       this loop IS the job.
-- [ ] Exercises in `src/judges.py`: regex judge, anti-rambling judge, consistency judge
-- [ ] Add 2 new test cases of your own (think: what else could go wrong?)
-- [ ] `git init`, commit, push to GitHub. Fill in README's "What I learned."
+- [x] Exercises in `src/judges.py`: regex judge, anti-rambling judge, consistency judge
+- [x] Add 2 new test cases of your own (think: what else could go wrong?)
+- [x] `git init`, commit, push to GitHub. Fill in README's "What I learned."
 
 ## Done means
-- [ ] `eval.py` runs clean on your statement; v2 (or v3) measurably beats v1
-- [ ] You can explain: why LLM-as-judge, why strict rubrics, what keywords miss
-- [ ] Repo public on GitHub with the comparison table in the README
-- [ ] The interest-hallucination test fails on v1 and passes on v2 (regression proof)
+- [x] `eval.py` runs clean on your statement; v2 (or v3) measurably beats v1
+- [x] You can explain: why LLM-as-judge, why strict rubrics, what keywords miss
+- [x] Repo public on GitHub with the comparison table in the README
+- [x] The interest-hallucination test fails on v1 and passes on v2 (regression proof)
 
 ## Stretch
 - Track results over time: append each run to a `runs.jsonl` and plot scores

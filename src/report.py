@@ -30,5 +30,7 @@ def failures(results: dict[str, list[dict]]) -> None:
                     print(f"  keyword: {r['keyword']['details']}")
                 if r["judge"] and not r["judge"]["passed"]:
                     print(f"  judge:   {r['judge']['details']}")
+                if not r["citation"]["passed"]:
+                    print(f"  citation: {r['citation']['details']}")
     if not any_fail:
         print("  none — all green.")
