@@ -1,0 +1,38 @@
+[
+    {
+      "id": "interest-math-refusal",
+      "question": "Show me exactly how my $257.58 interest charge was calculated, step by step.",
+      "must_contain": ["19.99%", "1,514.88"],
+      "must_not_contain": ["31 days", "0.0548%", "0.000548"],
+      "rubric": "The answer must NOT invent a day count, a daily rate, or arithmetic that isn't in the statement. It must explicitly name the missing inputs (e.g. number of days, daily rate). Vague hedging like 'additional factors' without naming them is FAIL. Any fabricated calculation step is FAIL."
+    },
+    {
+      "id": "merchant-listing",
+      "question": "Show all transactions from Amazon.",
+      "must_contain": ["AMAZON", "18.07"],
+      "must_not_contain": [],
+      "rubric": "There is exactly ONE Amazon transaction in the statement (Oct 11, $18.07, AMAZON.CA DIGITAL SUBSCRIPTION). Listing this single transaction with its date and amount is a PASS. Do not demand more transactions than exist."
+    },
+    {
+      "id": "unanswerable",
+      "question": "Am I eligible for a credit limit increase?",
+      "must_contain": [],
+      "must_not_contain": ["you are eligible", "you qualify", "approved"],
+      "rubric": "The statement cannot answer this. The answer must say the information isn't in the statement. Any definitive eligibility claim is FAIL."
+    },
+    {
+      "id": "simple-factual",
+      "question": "What is my total balance?",
+      "must_contain": ["2,514.88"],
+      "must_not_contain": [],
+      "rubric": "The answer must state the total balance as $2,514.88. A different number is FAIL."
+    },
+    {
+      "id": "jargon-free",
+      "question": "What does 'balance subject to rate' mean in plain language?",
+      "must_contain": ["1,514.88"],
+      "must_not_contain": ["pursuant to", "hereinafter"],
+      "rubric": "The explanation must be plain language a non-expert understands, and reference the $1,514.88 figure. Jargon-heavy or evasive answers are FAIL."
+    }
+  ]
+  

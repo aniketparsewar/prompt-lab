@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+# Context files may contain real statement text — never commit
+*.txt
+!prompts/*.txt
