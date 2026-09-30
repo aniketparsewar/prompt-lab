@@ -7,8 +7,8 @@ proven with data instead of vibes.
 python eval.py --context statement.txt
 ```
 
-Project 2 of the AI Engineer in 3 Months track. It evaluates the prompts from
-project 1 (statement-explainer): `v1_baseline` is the naive prompt,
+It evaluates the prompts from
+(statement-explainer): `v1_baseline` is the naive prompt,
 `v2_guardrailed` is the improved one. The harness shows, measurably, that the
 improvement worked — including catching the hallucinated interest math.
 
