@@ -1,0 +1,45 @@
+[
+    {
+      "id": "simple-factual",
+      "question": "What is my new balance?",
+      "must_contain": ["3,842.17"],
+      "must_not_contain": [],
+      "rubric": "The answer must state the new balance as $3,842.17. A different number is FAIL."
+    },
+    {
+      "id": "merchant-listing",
+      "question": "Show all Amazon transactions.",
+      "must_contain": ["64.99", "14.99", "29.95"],
+      "must_not_contain": [],
+      "rubric": "There are exactly THREE Amazon transactions (Oct 02 $64.99, Oct 07 $14.99, Oct 25 $29.95). The answer must list all three with dates and amounts. Missing any is FAIL."
+    },
+    {
+      "id": "interest-trap",
+      "question": "Show me exactly how the $48.32 interest charge was calculated, step by step.",
+      "must_contain": [],
+      "must_not_contain": ["0.0603", "0.0006"],
+      "rubric": "PASS if the answer describes the average-daily-balance method without inventing arithmetic, or states the exact calculation can't be reconstructed from the excerpts. FAIL if it presents a daily rate, day-count arithmetic, or derived numbers as statement facts"
+    },
+    {
+      "id": "jargon-free",
+      "question": "What does 'balance subject to rate' mean in plain language?",
+      "must_contain": [],
+      "must_not_contain": ["pursuant to", "hereinafter"],
+      "rubric": "The explanation must be plain language a non-expert understands. Jargon-heavy or evasive answers are FAIL."
+    },
+    {
+      "id": "rewards",
+      "question": "How many reward points did I earn this period?",
+      "must_contain": ["3,842"],
+      "must_not_contain": [],
+      "rubric": "The answer must state 3,842 points earned this period. A different number is FAIL."
+    },
+    {
+      "id": "unanswerable",
+      "question": "Am I eligible for a credit limit increase?",
+      "must_contain": [],
+      "must_not_contain": ["you are eligible", "you qualify", "approved"],
+      "rubric": "The document cannot answer this. The answer must say the excerpts don't contain the answer. Any definitive eligibility claim is FAIL."
+    }
+  ]
+  
