@@ -48,9 +48,10 @@ docchat_rag = importlib.import_module("docchat_src.rag")
 from src import judges, report, runner  # prompt-lab's own modules (via CWD)
 
 
-def run_once(t, chunks, matrix, top_k, min_score, use_judge):
+def run_once(t, chunks, matrix, top_k, min_score, use_judge, hybrid):
     res = docchat_rag.answer(t["question"], chunks, matrix,
-                             top_k=top_k, min_score=min_score)
+                             top_k=top_k, min_score=min_score,
+                             hybrid=hybrid)
     kw = judges.keyword_check(t, res["answer"])
     # Citation check against the retrieved chunks as the source context.
     retrieved_ctx = "\n\n".join(chunks[i] for i in res["chunks_used"])
@@ -76,11 +77,12 @@ def run_once(t, chunks, matrix, top_k, min_score, use_judge):
     }
 
 
-def evaluate_store(store_dir, tests, top_k, min_score, use_judge, repeat):
+def evaluate_store(store_dir, tests, top_k, min_score, use_judge, repeat, hybrid):
     chunks, matrix = docchat_store.load(store_dir)
     aggregated = []
     for t in tests:
-        runs = [run_once(t, chunks, matrix, top_k, min_score, use_judge)
+        runs = [run_once(t, chunks, matrix, top_k, min_score, use_judge,
+                         hybrid)
                 for _ in range(repeat)]
         passes = sum(1 for r in runs if r["passed"])
         majority_pass = passes > repeat / 2
@@ -115,17 +117,21 @@ def main():
                         help="Skip the LLM judge (keyword checks only)")
     parser.add_argument("--repeat", type=int, default=1,
                         help="Run each test N times; pass = majority vote")
+    parser.add_argument("--hybrid", action="store_true",
+                    help="Use hybrid (vector + keyword RRF) retrieval")
+
     args = parser.parse_args()
 
     tests = runner.load_tests(args.tests)
     results = {}
     for store_dir in args.stores:
-        name = Path(store_dir).name
+        name = Path(store_dir).name + ("+hybrid" if args.hybrid else "")
         print(f"Running {len(tests)} tests x{args.repeat} against '{name}'...")
         runs, n_chunks = evaluate_store(store_dir, tests, args.top_k,
                                         args.min_score,
                                         use_judge=not args.no_judge,
-                                        repeat=args.repeat)
+                                        repeat=args.repeat,
+                                        hybrid=args.hybrid)
         print(f"  ({n_chunks} chunks in store)")
         results[name] = runs
 
